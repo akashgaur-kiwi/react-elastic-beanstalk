@@ -1,0 +1,31 @@
+name: Deploy React to AWS
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y%m%dT%H%M%S')"
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: react-elastic-beanstalk
+          environment_name: React-elastic-beanstalk-env
+          version_label: v${{ steps.date.outputs.date }}
+          # existing_bucket_name: elasticbeanstalk-us-east-1-842413253702
+          region: ap-south-1
+          deployment_package: deploy.zip
