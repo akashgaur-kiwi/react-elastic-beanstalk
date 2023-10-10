@@ -43,4 +43,4 @@ jobs:
         environment_name: e-prfcte7sni
         version_label: ${{ github.run_id }}
         region: ap-south-1  # or your AWS region
-        zip_file: docker-build.zip
+        deployment_package: docker-build.zip
