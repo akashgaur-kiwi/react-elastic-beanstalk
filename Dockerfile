@@ -42,10 +42,10 @@ RUN npm install -g serve
 COPY --from=0 /app/build ./build
 
 # Specify the command to run when the container starts
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["serve", "-s", "build", "-l", "8080"]
 
 # Expose port 3000 for the app
-EXPOSE 3000
+EXPOSE 8080
 
 
 
