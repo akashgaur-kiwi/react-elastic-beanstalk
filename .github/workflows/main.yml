@@ -33,7 +33,9 @@ jobs:
           ]
         }' > docker-build/Dockerrun.aws.json
         cd docker-build && zip -r ../docker-build.zip .
-
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y%m%dT%H%M%S')"
     - name: Deploy to Elastic Beanstalk
       uses: einaregilsson/beanstalk-deploy@v14
       with:
@@ -41,6 +43,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: react-elastic-beanstalk
         environment_name: React-elastic-beanstalk-env
-        version_label: ${{ github.sha }}
+        version_label: v${{ steps.date.outputs.date }}
         region: ap-south-1  # or your AWS region
         deployment_package: docker-build.zip
