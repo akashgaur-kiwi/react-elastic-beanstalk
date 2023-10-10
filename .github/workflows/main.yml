@@ -1,4 +1,4 @@
-name: Deploy to AWS Elastic Beanstalk using Docker
+name: Deploy to AWS Elastic Beanstalk using
 
 on:
   push:
